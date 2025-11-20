@@ -48,10 +48,15 @@ export function FavicolorLink({
   return (
     <a
       href={href}
-      className={cn("inline-flex items-center", className)}
+      className={className}
       target={target}
       rel={rel}
-      style={{ gap: '0.375rem', verticalAlign: 'bottom' }}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '0.375rem',
+        verticalAlign: 'bottom'
+      }}
     >
       {iconPosition === 'left' && icon}
       {children}

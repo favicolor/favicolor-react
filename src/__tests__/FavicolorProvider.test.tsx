@@ -25,7 +25,7 @@ describe('FavicolorProvider', () => {
       </FavicolorProvider>
     );
 
-    expect(screen.getByTestId('apiUrl')).toHaveTextContent('https://api.favicolor.com');
+    expect(screen.getByTestId('apiUrl')).toHaveTextContent('https://icon.favicolor.com');
     expect(screen.getByTestId('defaultTheme')).toHaveTextContent('dark');
     expect(screen.getByTestId('defaultSize')).toHaveTextContent('64');
   });
@@ -62,7 +62,7 @@ describe('FavicolorProvider', () => {
     );
 
     // Les valeurs non fournies doivent utiliser les defaults
-    expect(screen.getByTestId('apiUrl')).toHaveTextContent('https://api.favicolor.com');
+    expect(screen.getByTestId('apiUrl')).toHaveTextContent('https://icon.favicolor.com');
     expect(screen.getByTestId('defaultTheme')).toHaveTextContent('dark');
     expect(screen.getByTestId('defaultSize')).toHaveTextContent('64');
     // La valeur fournie doit être présente

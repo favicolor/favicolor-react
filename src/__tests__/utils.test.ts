@@ -52,12 +52,12 @@ describe('buildFaviconApiUrl', () => {
 
   it('construit une URL basique sans paramètres', () => {
     const url = buildFaviconApiUrl('github.com', baseConfig);
-    expect(url).toBe('https://api.favicolor.test/v2/favicon/github.com');
+    expect(url).toBe('https://api.favicolor.test/favicon/github.com');
   });
 
   it('ajoute le paramètre theme', () => {
     const url = buildFaviconApiUrl('github.com', baseConfig, 'dark');
-    expect(url).toBe('https://api.favicolor.test/v2/favicon/github.com?theme=dark');
+    expect(url).toBe('https://api.favicolor.test/favicon/github.com?theme=dark');
   });
 
   it('ajoute le paramètre apiKey', () => {
@@ -89,7 +89,7 @@ describe('buildFaviconApiUrl', () => {
   it('utilise l\'URL par défaut si apiUrl n\'est pas fournie', () => {
     const config: FavicolorConfig = {};
     const url = buildFaviconApiUrl('github.com', config);
-    expect(url).toBe('https://api.favicolor.com/v2/favicon/github.com');
+    expect(url).toBe('https://icon.favicolor.com/favicon/github.com');
   });
 });
 
@@ -100,7 +100,7 @@ describe('buildImageUrl', () => {
 
   it('construit une URL avec le paramètre size', () => {
     const url = buildImageUrl('github.com', 64, baseConfig);
-    expect(url).toContain('/v2/image/github.com');
+    expect(url).toContain('/image/github.com');
     expect(url).toContain('size=64');
   });
 
@@ -146,7 +146,8 @@ describe('buildImageUrl', () => {
   it('utilise l\'URL par défaut si apiUrl n\'est pas fournie', () => {
     const config: FavicolorConfig = {};
     const url = buildImageUrl('github.com', 64, config);
-    expect(url).toContain('https://api.favicolor.com/v2/image/github.com');
+    expect(url).toContain('https://icon.favicolor.com/image/github.com');
+    expect(url).toContain('size=64');
   });
 });
 

@@ -122,16 +122,28 @@ export function FavicolorInlineIcon({
 
   if (!isLoaded) {
     return (
-      <span
-        className={cn("inline-block rounded animate-pulse bg-gray-200 dark:bg-gray-800", className)}
-        style={{
-          width: '1.2em',
-          height: '1.2em',
-          verticalAlign: 'inherit',
-          marginBottom: '-0.2em',
-          ...style
-        }}
-      />
+      <>
+        <style>{`
+          @keyframes favicolor-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+          }
+        `}</style>
+        <span
+          className={className}
+          style={{
+            width: '1.2em',
+            height: '1.2em',
+            verticalAlign: 'inherit',
+            marginBottom: '-0.2em',
+            display: 'inline-block',
+            borderRadius: '0.25em',
+            backgroundColor: effectiveTheme === 'dark' ? '#1f2937' : '#e5e7eb', // gray-800 dark, gray-200 light
+            animation: 'favicolor-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            ...style
+          }}
+        />
+      </>
     );
   }
 
@@ -141,7 +153,7 @@ export function FavicolorInlineIcon({
     switch (effectiveShape) {
       case 'circle':
       case 'custom':
-        return '50%'; // Cercle parfait
+        return '50%'; // Cercle parfait pour circle et custom
       case 'square':
       case 'squircle':
       case 'auto': // 'auto' ne devrait pas arriver ici, mais on le traite comme squircle
@@ -173,7 +185,7 @@ export function FavicolorInlineIcon({
 
   return (
     <span
-      className={cn("inline-block", className)}
+      className={className}
       style={{
         ...defaultStyle,
         backgroundImage

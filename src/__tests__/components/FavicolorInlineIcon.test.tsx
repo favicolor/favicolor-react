@@ -26,8 +26,11 @@ describe('FavicolorInlineIcon', () => {
   it('affiche un skeleton pendant le chargement', () => {
     renderWithProvider(<FavicolorInlineIcon url="https://github.com" />);
 
-    const skeleton = document.querySelector('.animate-pulse');
+    const skeleton = document.querySelector('span[style*="animation"]');
     expect(skeleton).toBeInTheDocument();
+    // Vérifier que l'animation pulse est présente
+    const style = skeleton?.getAttribute('style');
+    expect(style).toContain('pulse');
   });
 
   it('affiche l\'icône après le chargement', async () => {
@@ -104,12 +107,12 @@ describe('FavicolorInlineIcon', () => {
     });
   });
 
-  it('détecte automatiquement la forme circle et applique border-radius 50%', async () => {
+  it('détecte automatiquement la forme custom et applique border-radius 50% (cercle)', async () => {
     renderWithProvider(<FavicolorInlineIcon url="https://twitter.com" />);
 
     await waitFor(() => {
       const icon = screen.getByLabelText('https://twitter.com');
-      // twitter.com retourne shape: 'custom' qui donne borderRadius: '50%'
+      // twitter.com retourne shape: 'custom' qui donne borderRadius: '50%' (cercle pour inline)
       expect(icon).toHaveStyle({ borderRadius: '50%' });
     });
   });

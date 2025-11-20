@@ -199,30 +199,63 @@ export function FavicolorIcon({
     setImageUrl(computedUrl);
   }, [url, effectiveSize, dpr, enableRetina, isLoaded, config, effectiveTheme]);
 
-  // Calculer la classe CSS selon la forme
-  const getShapeClass = (): string => {
+  // Calculer le borderRadius du conteneur selon la forme
+  const getBorderRadius = (): string | number => {
     // Si 'auto', utiliser la shape détectée par l'API, sinon utiliser la valeur manuelle
     const shapeToUse = effectiveShape === 'auto' ? (detectedShape || 'squircle') : effectiveShape;
 
     switch (shapeToUse) {
       case 'circle':
-      case 'custom':
-        return 'rounded-full'; // Cercle parfait
+        return '50%'; // Cercle parfait
       case 'square':
       case 'squircle':
+      case 'custom': // Pour custom, le conteneur garde un borderRadius, seule l'image est carrée
       case 'auto': // Fallback au cas où 'auto' arriverait ici
       default:
-        return 'rounded-xl'; // Squircle (actuel)
+        return '12px'; // Squircle (coins arrondis)
     }
+  };
+
+  // Calculer le borderRadius de l'image selon la forme
+  const getImageBorderRadius = (): string | number => {
+    const shapeToUse = effectiveShape === 'auto' ? (detectedShape || 'squircle') : effectiveShape;
+
+    // Pour custom, pas de border radius sur l'image (coins carrés parfaits)
+    if (shapeToUse === 'custom') {
+      return 0;
+    }
+
+    // Pour les autres shapes, on applique un petit border radius
+    return '8px';
+  };
+
+  // Vérifier si on doit appliquer le mask-image (pas pour custom)
+  // Le mask se base UNIQUEMENT sur la shape détectée par l'API, pas sur le prop shape
+  const shouldApplyMask = (): boolean => {
+    // Si l'API a détecté 'custom', pas de mask (même si l'utilisateur force une autre shape en prop)
+    return detectedShape !== 'custom';
   };
 
   // Ne pas afficher tant que tout n'est pas chargé
   if (!isLoaded) {
     return (
       <div
-        className={cn(getShapeClass(), "animate-pulse bg-gray-200 dark:bg-gray-800", className)}
-        style={{ width: effectiveSize, height: effectiveSize }}
-      />
+        className={className}
+        style={{
+          width: effectiveSize,
+          height: effectiveSize,
+          borderRadius: getBorderRadius(),
+          backgroundColor: effectiveTheme === 'dark' ? '#1f2937' : '#e5e7eb', // gray-800 dark, gray-200 light
+          animation: 'favicolor-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        }}
+      >
+        <style>{`
+          @keyframes favicolor-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+          }
+        `}</style>
+      </div>
     );
   }
 
@@ -231,11 +264,7 @@ export function FavicolorIcon({
 
   return (
     <div
-      className={cn(
-        getShapeClass(),
-        "flex items-center justify-center transition-opacity duration-300",
-        className
-      )}
+      className={className}
       style={{
         width: effectiveSize,
         height: effectiveSize,
@@ -243,19 +272,29 @@ export function FavicolorIcon({
         backgroundColor: colors.bg,
         borderColor: colors.border,
         borderWidth: '1px',
-        borderStyle: 'solid'
+        borderStyle: 'solid',
+        borderRadius: getBorderRadius(),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'opacity 0.3s ease-in-out'
       }}
     >
       {imageUrl && !imageFailed ? (
         <img
           src={imageUrl}
           alt={url}
-          className="h-full w-full rounded-lg object-contain"
           style={{
-            maskImage: 'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA4QzAgMy41ODE3MiAzLjU4MTcyIDAgOCAwSDI0QzI4LjQxODMgMCAzMiAzLjU4MTcyIDMyIDhWMjRDMzIgMjguNDE4MyAyOC40MTgzIDMyIDI0IDMySDhDMy41ODE3MiAzMiAwIDI4LjQxODMgMCAyNFY4WiIgZmlsbD0iYmxhY2siLz48L3N2Zz4=)',
-            WebkitMaskImage: 'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA4QzAgMy41ODE3MiAzLjU4MTcyIDAgOCAwSDI0QzI4LjQxODMgMCAzMiAzLjU4MTcyIDMyIDhWMjRDMzIgMjguNDE4MyAyOC40MTgzIDMyIDI0IDMySDhDMy41ODE3MiAzMiAwIDI4LjQxODMgMCAyNFY4WiIgZmlsbD0iYmxhY2siLz48L3N2Zz4=)',
-            maskSize: 'contain',
-            WebkitMaskSize: 'contain'
+            width: '100%',
+            height: '100%',
+            borderRadius: getImageBorderRadius(),
+            objectFit: 'contain',
+            ...(shouldApplyMask() && {
+              maskImage: 'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA4QzAgMy41ODE3MiAzLjU4MTcyIDAgOCAwSDI0QzI4LjQxODMgMCAzMiAzLjU4MTcyIDMyIDhWMjRDMzIgMjguNDE4MyAyOC40MTgzIDMyIDI0IDMySDhDMy41ODE3MiAzMiAwIDI4LjQxODMgMCAyNFY4WiIgZmlsbD0iYmxhY2siLz48L3N2Zz4=)',
+              WebkitMaskImage: 'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA4QzAgMy41ODE3MiAzLjU4MTcyIDAgOCAwSDI0QzI4LjQxODMgMCAzMiAzLjU4MTcyIDMyIDhWMjRDMzIgMjguNDE4MyAyOC40MTgzIDMyIDI0IDMySDhDMy41ODE3MiAzMiAwIDI4LjQxODMgMCAyNFY4WiIgZmlsbD0iYmxhY2siLz48L3N2Zz4=)',
+              maskSize: 'contain',
+              WebkitMaskSize: 'contain'
+            })
           }}
           onError={(e) => {
             console.error(`[FavicolorIcon] Image load failed for: ${imageUrl}`, e);
@@ -268,8 +307,13 @@ export function FavicolorIcon({
         <img
           src={effectiveTheme === 'dark' ? defaultFaviconDark : defaultFaviconLight}
           alt="Default favicon"
-          className="h-full w-full object-contain"
-          style={{ opacity: 0.6 }}
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: getImageBorderRadius(),
+            objectFit: 'contain',
+            opacity: 0.6
+          }}
         />
       )}
     </div>

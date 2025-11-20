@@ -27,9 +27,12 @@ describe('FavicolorIcon', () => {
   it('affiche un skeleton pendant le chargement', () => {
     renderWithProvider(<FavicolorIcon url="https://github.com" />);
 
-    // Trouver le skeleton par sa classe
-    const skeleton = document.querySelector('.animate-pulse');
+    // Trouver le skeleton par son animation
+    const skeleton = document.querySelector('div[style*="animation"]');
     expect(skeleton).toBeInTheDocument();
+    // Vérifier que l'animation pulse est présente
+    const style = skeleton?.getAttribute('style');
+    expect(style).toContain('pulse');
   });
 
   it('affiche le favicon après le chargement', async () => {
@@ -130,15 +133,16 @@ describe('FavicolorIcon', () => {
     });
   });
 
-  it('gère le mode auto shape avec détection circle', async () => {
+  it('gère le mode auto shape avec détection custom (container garde borderRadius)', async () => {
     renderWithProvider(
       <FavicolorIcon url="https://twitter.com" shape="auto" />
     );
 
     await waitFor(() => {
-      // twitter.com retourne shape: 'custom' qui donne rounded-full
-      const container = document.querySelector('.rounded-full');
-      expect(container).toBeInTheDocument();
+      // twitter.com retourne shape: 'custom' mais le container garde borderRadius: 12px
+      // (seule l'image a borderRadius: 0)
+      const container = document.querySelector('div[style*="background"]');
+      expect(container).toHaveStyle({ borderRadius: '12px' });
     });
   });
 
@@ -148,8 +152,8 @@ describe('FavicolorIcon', () => {
     );
 
     await waitFor(() => {
-      const container = document.querySelector('.rounded-full');
-      expect(container).toBeInTheDocument();
+      const container = document.querySelector('div[style*="background"]');
+      expect(container).toHaveStyle({ borderRadius: '50%' });
     });
   });
 
@@ -159,8 +163,20 @@ describe('FavicolorIcon', () => {
     );
 
     await waitFor(() => {
-      const container = document.querySelector('.rounded-xl');
-      expect(container).toBeInTheDocument();
+      const container = document.querySelector('div[style*="background"]');
+      expect(container).toHaveStyle({ borderRadius: '12px' });
+    });
+  });
+
+  it('applique shape custom (container garde borderRadius)', async () => {
+    renderWithProvider(
+      <FavicolorIcon url="https://github.com" shape="custom" />
+    );
+
+    await waitFor(() => {
+      // Pour custom, le container garde borderRadius: 12px (seule l'image a borderRadius: 0)
+      const container = document.querySelector('div[style*="background"]');
+      expect(container).toHaveStyle({ borderRadius: '12px' });
     });
   });
 

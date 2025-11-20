@@ -33,8 +33,9 @@ export type ApiSize = 32 | 64 | 96 | 128;
 
 /**
  * Formes du conteneur de l'icône
- * - circle/custom: rendu en cercle (border-radius: 50%)
- * - square/squircle: rendu en squircle avec coins arrondis
+ * - circle: rendu en cercle (border-radius: 50%)
+ * - custom: pour FavicolorIcon, pas de mask. Pour FavicolorInlineIcon, rendu en cercle
+ * - square/squircle: rendu en squircle avec coins arrondis (par défaut)
  * - auto: utilise la forme détectée par l'API
  */
 export type FavicolorShape = 'circle' | 'custom' | 'square' | 'squircle' | 'auto';
@@ -53,7 +54,7 @@ export interface FavicolorIconProps {
   className?: string;
   /** Composant de fallback personnalisé */
   fallback?: ReactNode;
-  /** Forme du conteneur (circle/custom = cercle, square/squircle = squircle) */
+  /** Forme du conteneur (squircle par défaut, auto = détection API, circle = cercle, custom = pas de mask) */
   shape?: FavicolorShape;
 }
 
@@ -100,7 +101,7 @@ export interface FavicolorLinkProps {
 }
 
 /**
- * Réponse de l'API Favicolor /v2/favicon/{domain}
+ * Réponse de l'API Favicolor /favicon/{domain}
  */
 export interface FaviconResponse {
   domain: string;

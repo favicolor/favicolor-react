@@ -72,6 +72,9 @@ export function buildImageUrl(
   const baseUrl = normalizeApiUrl(config.apiUrl || 'https://icon.favicolor.com');
   const params = new URLSearchParams();
 
+  // Ajouter size en query param
+  params.append('size', size.toString());
+
   if (theme) {
     params.append('theme', theme);
   }
@@ -84,7 +87,7 @@ export function buildImageUrl(
   }
 
   const queryString = params.toString();
-  return `${baseUrl}/image/${domain}/${size}${queryString ? `?${queryString}` : ''}`;
+  return `${baseUrl}/image/${domain}${queryString ? `?${queryString}` : ''}`;
 }
 
 /**
