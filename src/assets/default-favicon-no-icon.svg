@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" stroke="#64748b" fill="none">
+  <!-- Globe terrestre stylisé - couleur dominante #64748b (RGB pur) -->
+  3 -    <path stroke-width="2.5" d="M32,2.5a29.5,29.5 0 1,0 0.3,0z"/>
+  4 -    <path stroke-width="2.5" d="m32,2.5v59m29.5-29.5H2.5M9.5,14a39.5,39.5 0 0,0 45,0 m0,36 a39.5,39.5 0 0,0-45,0M29.5,3.5a38,38 0 0,0 0,57.5 m5,0 a38,38 0 0,0 0-57.5"/>
+</svg>
