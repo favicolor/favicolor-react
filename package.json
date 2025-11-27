@@ -56,5 +56,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/favicolor/favicolor-react"
+  },
+  "homepage": "https://github.com/favicolor/favicolor-react#readme",
+  "bugs": {
+    "url": "https://github.com/favicolor/favicolor-react/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

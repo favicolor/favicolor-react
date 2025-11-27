@@ -5,21 +5,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
 
-Composants React pour afficher des favicons avec leurs couleurs dominantes extraites automatiquement via l'API Favicolor.
+React components to display favicons with their dominant colors automatically extracted via the Favicolor API.
 
 ## Installation
 
 ```bash
 npm install @favicolor/react
-# ou
+# or
 yarn add @favicolor/react
-# ou
+# or
 pnpm add @favicolor/react
 ```
 
 ## Configuration
 
-Wrappez votre application avec le `FavicolorProvider` pour configurer l'API :
+Wrap your application with the `FavicolorProvider` to configure the API:
 
 ```tsx
 import { FavicolorProvider } from '@favicolor/react';
@@ -28,12 +28,12 @@ function App() {
   return (
     <FavicolorProvider
       config={{
-        apiUrl: 'https://icon.favicolor.com', // Optionnel, valeur par défaut
-        apiKey: process.env.NEXT_PUBLIC_FAVICOLOR_API_KEY, // Pour localhost
-        appId: process.env.NEXT_PUBLIC_FAVICOLOR_APP_ID, // Pour production
-        defaultTheme: 'dark', // 'light' ou 'dark'
-        defaultSize: 64, // Taille entre 32 et 128 pixels
-        enableRetina: true, // Active la détection Retina/HiDPI (défaut: true)
+        apiUrl: 'https://icon.favicolor.com', // Optional, default value
+        apiKey: process.env.NEXT_PUBLIC_FAVICOLOR_API_KEY, // For localhost
+        appId: process.env.NEXT_PUBLIC_FAVICOLOR_APP_ID, // For production
+        defaultTheme: 'dark', // 'light' or 'dark'
+        defaultSize: 64, // Size between 32 and 128 pixels
+        enableRetina: true, // Enable Retina/HiDPI detection (default: true)
       }}
     >
       <YourApp />
@@ -42,16 +42,16 @@ function App() {
 }
 ```
 
-### Configuration de l'authentification
+### Authentication configuration
 
-- **`apiKey`** : Utilisée automatiquement pour les requêtes depuis localhost (développement)
-- **`appId`** : Utilisée pour les requêtes depuis des domaines enregistrés (production)
+- **`apiKey`**: Automatically used for requests from localhost (development)
+- **`appId`**: Used for requests from registered domains (production)
 
-## Composants
+## Components
 
 ### FavicolorIcon
 
-Affiche un favicon dans un conteneur squircle avec les couleurs extraites.
+Displays a favicon in a squircle container with extracted colors.
 
 ```tsx
 import { FavicolorIcon } from '@favicolor/react';
@@ -68,17 +68,17 @@ function MyComponent() {
 }
 ```
 
-**Props :**
-- `url` (string, requis) : URL complète ou nom de domaine
-- `size` (number, optionnel) : Taille de l'image en pixels (entre 32 et 128). Arrondie automatiquement à la taille d'API optimale (32, 64, 96 ou 128)
-- `theme` ('light' | 'dark', optionnel) : Thème des couleurs
-- `className` (string, optionnel) : Classes CSS additionnelles
-- `fallback` (ReactNode, optionnel) : Composant de fallback personnalisé
-- `shape` ('circle' | 'square' | 'squircle' | 'custom' | 'auto', optionnel) : Forme du conteneur (défaut: 'squircle')
+**Props:**
+- `url` (string, required): Full URL or domain name
+- `size` (number, optional): Image size in pixels (between 32 and 128). Automatically rounded to the optimal API size (32, 64, 96 or 128)
+- `theme` ('light' | 'dark', optional): Color theme
+- `className` (string, optional): Additional CSS classes
+- `fallback` (ReactNode, optional): Custom fallback component
+- `shape` ('circle' | 'square' | 'squircle' | 'custom' | 'auto', optional): Container shape (default: 'squircle')
 
 ### FavicolorInlineIcon
 
-Icône inline avec taille adaptative en `em` pour s'intégrer au texte.
+Inline icon with adaptive size in `em` to integrate with text.
 
 ```tsx
 import { FavicolorInlineIcon } from '@favicolor/react';
@@ -86,21 +86,21 @@ import { FavicolorInlineIcon } from '@favicolor/react';
 function MyText() {
   return (
     <p className="text-lg">
-      Visitez <FavicolorInlineIcon url="github.com" /> GitHub
+      Visit <FavicolorInlineIcon url="github.com" /> GitHub
     </p>
   );
 }
 ```
 
-**Props :**
-- `url` (string, requis) : URL complète ou nom de domaine
-- `theme` ('light' | 'dark') : Thème des couleurs
-- `className` (string) : Classes CSS additionnelles
-- `style` (CSSProperties) : Styles CSS inline (ex: `{ width: '1.5em' }`)
+**Props:**
+- `url` (string, required): Full URL or domain name
+- `theme` ('light' | 'dark'): Color theme
+- `className` (string): Additional CSS classes
+- `style` (CSSProperties): Inline CSS styles (e.g. `{ width: '1.5em' }`)
 
 ### FavicolorLink
 
-Lien avec favicon inline automatique.
+Link with automatic inline favicon.
 
 ```tsx
 import { FavicolorLink } from '@favicolor/react';
@@ -109,7 +109,7 @@ function MyLinks() {
   return (
     <div>
       <FavicolorLink href="https://github.com">
-        Visitez GitHub
+        Visit GitHub
       </FavicolorLink>
 
       <FavicolorLink
@@ -117,29 +117,29 @@ function MyLinks() {
         iconPosition="right"
         className="text-blue-500 hover:underline"
       >
-        Rechercher
+        Search
       </FavicolorLink>
     </div>
   );
 }
 ```
 
-**Props :**
-- `href` (string, requis) : URL de destination
-- `children` (ReactNode, requis) : Contenu du lien
-- `iconPosition` ('left' | 'right') : Position de l'icône (défaut: 'left')
-- `showIcon` (boolean) : Afficher l'icône (défaut: true)
-- `className` (string) : Classes CSS pour le lien
-- `iconClassName` (string) : Classes CSS pour l'icône
-- `iconStyle` (CSSProperties) : Styles CSS pour l'icône
-- `target` (string) : Attribut target du lien
-- `rel` (string) : Attribut rel du lien
+**Props:**
+- `href` (string, required): Destination URL
+- `children` (ReactNode, required): Link content
+- `iconPosition` ('left' | 'right'): Icon position (default: 'left')
+- `showIcon` (boolean): Show icon (default: true)
+- `className` (string): CSS classes for the link
+- `iconClassName` (string): CSS classes for the icon
+- `iconStyle` (CSSProperties): CSS styles for the icon
+- `target` (string): Link target attribute
+- `rel` (string): Link rel attribute
 
 ## Hook
 
 ### useFavicolor
 
-Accède à la configuration Favicolor depuis le contexte.
+Access Favicolor configuration from context.
 
 ```tsx
 import { useFavicolor } from '@favicolor/react';
@@ -151,71 +151,71 @@ function MyComponent() {
 }
 ```
 
-## Fonctionnalités
+## Features
 
-- ✅ **Tailles flexibles** : Accepte n'importe quelle taille entre 32 et 128 pixels, arrondie automatiquement à la taille d'API optimale
-- ✅ **Détection Retina/HiDPI** : Charge automatiquement des images 2x sur les écrans haute résolution (Retina, 4K, etc.)
-- ✅ **Dynamic DPI detection** : Recalcule l'image automatiquement quand la fenêtre est déplacée entre des écrans de résolutions différentes
-- ✅ **Cache intelligent** : Les couleurs sont mises en cache, les URLs d'images sont calculées dynamiquement selon le DPR
-- ✅ **Fallback élégant** : Affiche une icône globe par défaut si le favicon est introuvable
-- ✅ **Thèmes light/dark** : Support natif des deux thèmes
-- ✅ **TypeScript strict** : Typage strict pour toutes les props et interfaces
-- ✅ **SSR-safe** : Compatible avec Next.js et autres frameworks SSR
-- ✅ **Inline adaptative** : FavicolorInlineIcon s'adapte automatiquement à la taille du texte
-- ✅ **Tests complets** : 124 tests unitaires avec Vitest
+- ✅ **Flexible sizes**: Accepts any size between 32 and 128 pixels, automatically rounded to the optimal API size
+- ✅ **Retina/HiDPI detection**: Automatically loads 2x images on high-resolution screens (Retina, 4K, etc.)
+- ✅ **Dynamic DPI detection**: Automatically recalculates the image when the window is moved between screens with different resolutions
+- ✅ **Smart caching**: Colors are cached, image URLs are dynamically calculated based on DPR
+- ✅ **Graceful fallback**: Displays a globe icon by default if the favicon is not found
+- ✅ **Light/dark themes**: Native support for both themes
+- ✅ **Strict TypeScript**: Strict typing for all props and interfaces
+- ✅ **SSR-safe**: Compatible with Next.js and other SSR frameworks
+- ✅ **Adaptive inline**: FavicolorInlineIcon automatically adapts to text size
+- ✅ **Comprehensive tests**: 124 unit tests with Vitest
 
-## Optimisation Retina/HiDPI
+## Retina/HiDPI Optimization
 
-Le composant FavicolorIcon détecte automatiquement la résolution de l'écran (Device Pixel Ratio) et charge des images optimisées :
+The FavicolorIcon component automatically detects screen resolution (Device Pixel Ratio) and loads optimized images:
 
-### Comment ça fonctionne ?
+### How it works
 
-1. **Détection automatique** : Le composant détecte le DPR de l'écran (`window.devicePixelRatio`)
-2. **Calcul intelligent** : La taille d'API est calculée automatiquement : `displaySize × min(DPR, 2)`
-3. **Arrondi optimal** : Arrondi vers le haut à la taille d'API la plus proche (32, 64, 96, 128) pour éviter l'upscaling
-4. **Cap à 2x** : Le DPR est cappé à 2x maximum pour optimiser la bande passante
+1. **Automatic detection**: The component detects the screen DPR (`window.devicePixelRatio`)
+2. **Smart calculation**: API size is automatically calculated: `displaySize × min(DPR, 2)`
+3. **Optimal rounding**: Rounds up to the nearest API size (32, 64, 96, 128) to avoid upscaling
+4. **Capped at 2x**: DPR is capped at 2x maximum to optimize bandwidth
 
-### Exemples
+### Examples
 
 ```tsx
-// Écran standard (DPR 1x)
+// Standard screen (DPR 1x)
 <FavicolorIcon url="github.com" size={64} />
-// → Charge une image 64×64 pixels
+// → Loads a 64×64 pixel image
 
-// Écran Retina (DPR 2x)
+// Retina screen (DPR 2x)
 <FavicolorIcon url="github.com" size={64} />
-// → Charge une image 128×128 pixels (64 × 2 = 128)
+// → Loads a 128×128 pixel image (64 × 2 = 128)
 
-// Écran 4K (DPR 3x, cappé à 2x)
+// 4K screen (DPR 3x, capped at 2x)
 <FavicolorIcon url="github.com" size={64} />
-// → Charge une image 128×128 pixels (64 × 2 = 128, DPR cappé)
+// → Loads a 128×128 pixel image (64 × 2 = 128, DPR capped)
 
-// Taille non standard (arrondie automatiquement)
+// Non-standard size (automatically rounded)
 <FavicolorIcon url="github.com" size={72} />
-// → Sur écran Retina : 72 × 2 = 144, arrondi à 128px
+// → On Retina screen: 72 × 2 = 144, rounded to 128px
 ```
 
-### Désactiver la détection Retina
+### Disabling Retina detection
 
-Si vous souhaitez désactiver la détection Retina (par exemple pour économiser la bande passante) :
+If you want to disable Retina detection (e.g., to save bandwidth):
 
 ```tsx
 <FavicolorProvider
   config={{
-    enableRetina: false, // Désactive la détection Retina
+    enableRetina: false, // Disables Retina detection
   }}
 >
   <App />
 </FavicolorProvider>
 ```
 
-### Détection dynamique du changement d'écran
+### Dynamic screen change detection
 
-Le composant écoute automatiquement les changements de résolution via `matchMedia`. Quand vous déplacez la fenêtre d'un écran standard vers un écran Retina (ou vice-versa), l'image est automatiquement recalculée et rechargée.
+The component automatically listens for resolution changes via `matchMedia`. When you move the window from a standard screen to a Retina screen (or vice versa), the image is automatically recalculated and reloaded.
 
-## Utilitaires
+## Utilities
 
-Des fonctions utilitaires sont également exportées pour usage avancé :
+Utility functions are also exported for advanced usage:
 
 ```tsx
 import {
@@ -228,16 +228,16 @@ import {
   getOptimalApiSize,
 } from '@favicolor/react';
 
-// Exemple d'utilisation
+// Usage example
 const dpr = getDevicePixelRatio(); // 1, 1.5, 2, etc.
-const apiSize = getOptimalApiSize(64, dpr, true); // 64, 96 ou 128
+const apiSize = getOptimalApiSize(64, dpr, true); // 64, 96 or 128
 ```
 
-## Développement
+## Development
 
 ### Cache
 
-En développement, vous pouvez vider le cache client via la console :
+During development, you can clear the client cache via the console:
 
 ```javascript
 window.clearFavicolorCache();
@@ -246,23 +246,23 @@ window.clearFavicolorCache();
 ### Tests
 
 ```bash
-# Lancer les tests
+# Run tests
 npm test
 
-# Mode watch (relance automatique)
+# Watch mode (automatic re-run)
 npm run test:watch
 
-# Interface UI interactive
+# Interactive UI
 npm run test:ui
 
-# Générer le rapport de couverture
+# Generate coverage report
 npm run test:coverage
 ```
 
-## Licence
+## License
 
 MIT
 
 ## Support
 
-Pour toute question ou problème, visitez [https://favicolor.com](https://favicolor.com)
+For any questions or issues, visit [https://favicolor.com](https://favicolor.com)
