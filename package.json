@@ -1,6 +1,6 @@
 {
   "name": "@favicolor/react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React components for Favicolor - Extract and display website favicons with dominant colors",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
