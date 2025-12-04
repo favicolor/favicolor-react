@@ -48,8 +48,8 @@ export function mockFetch() {
   global.fetch = vi.fn((url: string | URL) => {
     const urlString = typeof url === 'string' ? url : url.toString();
 
-    // Extraire le domaine de l'URL (sans /v2/)
-    const domainMatch = urlString.match(/\/(?:favicon|image)\/([^/?]+)/);
+    // Extraire le domaine de l'URL (supporte les anciens et nouveaux endpoints)
+    const domainMatch = urlString.match(/\/(?:favicon|colors|image|icon)\/([^/?]+)/);
     const domain = domainMatch ? domainMatch[1] : '';
 
     // Déterminer la réponse en fonction du domaine
@@ -71,8 +71,8 @@ export function mockFetch() {
       response = { ...mockFaviconResponseSuccess, domain };
     }
 
-    // Pour les URLs /image/*, retourner un blob vide
-    if (urlString.includes('/image/')) {
+    // Pour les URLs /image/* ou /icon/*, retourner un blob vide
+    if (urlString.includes('/image/') || urlString.includes('/icon/')) {
       return Promise.resolve({
         ok: true,
         status: 200,
@@ -80,7 +80,7 @@ export function mockFetch() {
       } as Response);
     }
 
-    // Pour les URLs /favicon/*, retourner le JSON
+    // Pour les URLs /favicon/* ou /colors/*, retourner le JSON
     return Promise.resolve({
       ok: true,
       status: 200,
