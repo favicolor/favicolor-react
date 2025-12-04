@@ -35,7 +35,7 @@ export function extractDomain(url: string): string {
 }
 
 /**
- * Construit l'URL de l'API pour récupérer les données d'un favicon
+ * Construit l'URL de l'API pour récupérer les couleurs d'un favicon
  */
 export function buildFaviconApiUrl(
   domain: string,
@@ -57,11 +57,11 @@ export function buildFaviconApiUrl(
   }
 
   const queryString = params.toString();
-  return `${baseUrl}/favicon/${domain}${queryString ? `?${queryString}` : ''}`;
+  return `${baseUrl}/colors/${domain}${queryString ? `?${queryString}` : ''}`;
 }
 
 /**
- * Construit l'URL de l'image d'un favicon
+ * Construit l'URL de l'icône d'un favicon
  */
 export function buildImageUrl(
   domain: string,
@@ -87,7 +87,7 @@ export function buildImageUrl(
   }
 
   const queryString = params.toString();
-  return `${baseUrl}/image/${domain}${queryString ? `?${queryString}` : ''}`;
+  return `${baseUrl}/icon/${domain}${queryString ? `?${queryString}` : ''}`;
 }
 
 /**
